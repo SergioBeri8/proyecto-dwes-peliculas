@@ -1,6 +1,6 @@
 export const environment = {
   production: false,
   supabaseUrl: 'https://aawvezqthxemfprlrzlt.supabase.co',
-  supabaseKey: 'sb_publishable_ABJSjAlfZLFU5p_8FypCPg_2vrlS9Vc',
+  supabaseKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFhd3ZlenF0aHhlbWZwcmxyemx0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzEyODc1MjAsImV4cCI6MjA4Njg2MzUyMH0.9e51UZzDf8m-Eh3egdZcXrCdd7f3YMEuJfXCYZFmCdk',
   apiUrl: 'https://developer.themoviedb.org/'
 };
