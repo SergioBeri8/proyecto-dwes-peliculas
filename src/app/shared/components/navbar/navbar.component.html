@@ -1,3 +1,8 @@
 <nav>
-  <!-- Navbar content goes here -->
+  <div class="navbar-content">
+    <!-- ...otros elementos del navbar... -->
+    <button *ngIf="authService.currentUser()" (click)="logout()" class="btn-logout">
+      Logout
+    </button>
+  </div>
 </nav>
