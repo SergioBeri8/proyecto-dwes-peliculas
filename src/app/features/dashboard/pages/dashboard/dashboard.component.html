@@ -1,17 +1,37 @@
 <div class="dashboard-container">
-  <header style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+  <header style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding: 10px; background: #f0f0f0; border-radius: 8px;">
     <p>Hola, <strong>{{ userEmail }}</strong></p>
     <button (click)="logout()" class="btn-logout">Cerrar Sesión</button>
   </header>
 
+  @if (favoritesService.myFavorites().length > 0) {
+    <section class="favorites-section" style="margin-bottom: 40px;">
+      <h2 style="color: #d32f2f;">❤️ Mis Favoritas (Guardadas en Supabase)</h2>
+      <div style="display: flex; gap: 10px; overflow-x: auto; padding: 10px;">
+        @for (fav of favoritesService.myFavorites(); track fav.id) {
+          <div style="min-width: 120px; text-align: center;">
+            <img [src]="'https://image.tmdb.org/t/p/w200' + fav.poster_path" style="width: 100%; border-radius: 5px;">
+            <p style="font-size: 0.7rem;">{{ fav.title }}</p>
+          </div>
+        }
+      </div>
+    </section>
+  }
+
   <h1>Películas Populares</h1>
   
-  <div class="movie-grid">
+  <div class="movie-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px;">
     @for (movie of movies(); track movie.id) {
-      <div class="movie-card">
-        <img [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path" [alt]="movie.title">
+      <div class="movie-card" style="border: 1px solid #ddd; padding: 10px; border-radius: 10px; text-align: center;">
+        <img [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path" [alt]="movie.title" style="width: 100%; border-radius: 5px;">
         <h3>{{ movie.title }}</h3>
         <p>⭐ {{ movie.vote_average }}</p>
+        
+        <button (click)="onToggleFavorite(movie)" 
+                [style.background-color]="isFavorite(movie.id) ? '#ffcdd2' : '#e0e0e0'"
+                style="border: none; padding: 8px; border-radius: 5px; cursor: pointer; width: 100%;">
+          {{ isFavorite(movie.id) ? '❤️ Quitar' : '🤍 Favorito' }}
+        </button>
       </div>
     } @empty {
       <p>Cargando películas...</p>
