@@ -1,8 +1,16 @@
 <nav>
   <div class="navbar-content">
-    <!-- ...otros elementos del navbar... -->
-    <button *ngIf="authService.currentUser()" (click)="logout()" class="btn-logout">
-      Logout
-    </button>
+    <a routerLink="/" class="navbar-logo">
+      App Películas
+    </a>
+    <div class="navbar-links">
+      @if (authService.currentUser()) {
+        <a routerLink="/dashboard">Dashboard</a>
+        <button (click)="logout()" class="btn-logout">Logout</button>
+      } @else {
+        <a routerLink="/auth/login">Login</a>
+        <a routerLink="/auth/register">Registro</a>
+      }
+    </div>
   </div>
 </nav>

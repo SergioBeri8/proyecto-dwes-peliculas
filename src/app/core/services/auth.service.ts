@@ -21,8 +21,16 @@ export class AuthService {
   }
 
   // Login y Registro
-  async signUp(email: string, password: string) {
-    return await this.supabase.auth.signUp({ email, password });
+  async signUp(email: string, password: string, name?: string) {
+    return await this.supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        data: {
+          full_name: name
+        }
+      }
+    });
   }
 
   async signIn(email: string, password: string) {

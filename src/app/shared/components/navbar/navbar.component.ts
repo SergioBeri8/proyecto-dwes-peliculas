@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { AuthService } from '../../../core/services/auth.service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
+  imports: [CommonModule, RouterLink],
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
@@ -16,7 +18,6 @@ export class NavbarComponent {
 
   async logout() {
     await this.authService.signOut();
-    localStorage.removeItem('jwt');
-    this.router.navigate(['/login']);
+    this.router.navigate(['/auth/login']);
   }
 }

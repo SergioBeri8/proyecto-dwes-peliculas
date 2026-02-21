@@ -1,6 +1,9 @@
 export const environment = {
   production: false,
+  // ¡Ojo! No es buena práctica subir las claves a un repositorio.
+  // Es mejor usar variables de entorno del sistema o del servidor de despliegue.
   supabaseUrl: 'https://aawvezqthxemfprlrzlt.supabase.co',
   supabaseKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFhd3ZlenF0aHhlbWZwcmxyemx0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzEyODc1MjAsImV4cCI6MjA4Njg2MzUyMH0.9e51UZzDf8m-Eh3egdZcXrCdd7f3YMEuJfXCYZFmCdk',
-  apiUrl: 'https://developer.themoviedb.org/'
+  tmdbApiUrl: 'https://api.themoviedb.org/3',
+  tmdbApiKey: 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3Y2E5YTAwOTZhM2Q3M2NhMzk1MzA2MjAyZGI1MmM5ZCIsIm5iZiI6MTc3MDM2NzU0My4zNzEsInN1YiI6IjY5ODVhYTM3YjY1M2ZmNjU1MjYxYTRlZCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.oQpOz4ljoO1cCmzzq5UI5yuw_CAh988DedxV4R1fSxw'
 };

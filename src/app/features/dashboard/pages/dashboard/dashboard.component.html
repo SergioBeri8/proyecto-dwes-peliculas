@@ -1,4 +1,9 @@
 <div class="dashboard-container">
+  <header style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+    <p>Hola, <strong>{{ userEmail }}</strong></p>
+    <button (click)="logout()" class="btn-logout">Cerrar Sesión</button>
+  </header>
+
   <h1>Películas Populares</h1>
   
   <div class="movie-grid">
@@ -8,6 +13,8 @@
         <h3>{{ movie.title }}</h3>
         <p>⭐ {{ movie.vote_average }}</p>
       </div>
+    } @empty {
+      <p>Cargando películas...</p>
     }
   </div>
 </div>

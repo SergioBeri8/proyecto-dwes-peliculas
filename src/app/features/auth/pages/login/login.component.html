@@ -13,9 +13,11 @@
           formControlName="email" 
           placeholder="ejemplo@correo.com"
         >
-        <small class="error-text" *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
-          Email no válido
-        </small>
+        @if (loginForm.get('email')?.invalid && loginForm.get('email')?.touched) {
+          <small class="error-text">
+            Email no válido
+          </small>
+        }
       </div>
 
       <div class="form-group">
@@ -26,20 +28,21 @@
           formControlName="password" 
           placeholder="Mínimo 6 caracteres"
         >
-        <small class="error-text" *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
-          Mínimo 6 caracteres
-        </small>
+        @if (loginForm.get('password')?.invalid && loginForm.get('password')?.touched) {
+          <small class="error-text">
+            Mínimo 6 caracteres
+          </small>
+        }
       </div>
 
       <button type="submit" [disabled]="loginForm.invalid" class="btn-login">
         Entrar al Sistema
       </button>
-      </form>
-
-      <div class="footer-links">
-        <p>¿No tienes cuenta? <a routerLink="/auth/register">Regístrate aquí</a></p>
-      </div>
     </form>
+
+    <div style="text-align:center; margin-top:16px;">
+      <p>¿No tienes cuenta? <a routerLink="/auth/register">Regístrate aquí</a></p>
+    </div>
 
     <div class="footer-links">
       <p>¿No tienes cuenta? <a routerLink="/auth/register">Regístrate ahora</a></p>

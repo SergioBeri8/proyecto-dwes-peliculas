@@ -1,30 +1,43 @@
-import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, AbstractControl, ValidationErrors } from '@angular/forms';
+import { Router, RouterModule } from '@angular/router'; // Añadido
 import { AuthService } from '../../../../core/services/auth.service';
-import { Router } from '@angular/router';
+
+function passwordValidator(control: AbstractControl): ValidationErrors | null {
+  const password = control.get('password');
+  const confirmPassword = control.get('confirmPassword');
+  if (password?.pristine || confirmPassword?.pristine) {
+    return null;
+  }
+  return password && confirmPassword && password.value !== confirmPassword.value
+    ? { passwordsNotMatching: true }
+    : null;
+}
 
 @Component({
   selector: 'app-register',
   standalone: true,
+  imports: [CommonModule, ReactiveFormsModule, RouterModule], // Añadido RouterModule
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
+  private fb = inject(FormBuilder);
+  private authService = inject(AuthService);
+  private router = inject(Router);
+
   registerForm: FormGroup;
   errorMessage: string = '';
   successMessage: string = '';
 
-  constructor(
-    private fb: FormBuilder,
-    private authService: AuthService,
-    private router: Router
-  ) {
+  constructor() {
     this.registerForm = this.fb.group({
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', Validators.required]
-    });
+    }, { validators: passwordValidator });
   }
 
   async onSubmit() {
@@ -32,25 +45,15 @@ export class RegisterComponent {
       this.errorMessage = 'Por favor, completa todos los campos correctamente.';
       return;
     }
-    const { email, password, confirmPassword } = this.registerForm.value;
-    if (password !== confirmPassword) {
-      this.errorMessage = 'Las contraseñas no coinciden.';
-      return;
-    }
+    const { name, email, password } = this.registerForm.value;
+
     try {
-      const { data, error } = await this.authService.signUp(email, password);
+      const { data, error } = await this.authService.signUp(email!, password!, name!);
       if (error) {
         this.errorMessage = error.message;
-      } else {
-        // Guardar JWT en LocalStorage si existe
-        const accessToken = data?.session?.access_token;
-        if (accessToken) {
-          localStorage.setItem('jwt', accessToken);
-        }
-        this.successMessage = 'Registro exitoso. Redirigiendo al dashboard...';
-        setTimeout(() => {
-          this.router.navigate(['/dashboard']);
-        }, 1500);
+      } else if (data.user) {
+        this.successMessage = 'Registro exitoso. ¡Bienvenido!';
+        setTimeout(() => this.router.navigate(['/dashboard']), 1500);
       }
     } catch (err: any) {
       this.errorMessage = err.message || 'Error desconocido.';
