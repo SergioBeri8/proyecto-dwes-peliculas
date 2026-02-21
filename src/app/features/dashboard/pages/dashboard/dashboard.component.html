@@ -1,41 +1,45 @@
-<header style="display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; background: #141414;">
-  <img src="../../../../../../public/logo.png" alt="Logo" style="height: 40px;"> <div>
-    <span>{{ userEmail }}</span>
-    <button (click)="logout()">Salir</button>
+<div class="dashboard-container">
+
+  <header style="display: flex; justify-content: space-between; align-items: center; padding: 15px 25px; background: #141414;">
+  <img src="logo.png" alt="Logo" style="height: 100px; width: auto;"> 
+  <div style="display: flex; align-items: center; gap: 15px;">
+    <span style="color: white; font-weight: bold;">{{ userEmail }}</span>
+    <button (click)="logout()" class="btn-logout">Salir</button>
   </div>
 </header>
 
   @if (favoritesService.myFavorites().length > 0) {
-    <section class="favorites-section" style="margin-bottom: 40px;">
-      <h2 style="color: #d32f2f;">❤️ Mis Favoritas (Guardadas en Supabase)</h2>
-      <div style="display: flex; gap: 10px; overflow-x: auto; padding: 10px;">
+    <section class="favorites-section" style="margin: 20px 0 40px 0;">
+      <h2 style="color: #d32f2f; margin-left: 20px;">❤️ Mis Favoritas (Supabase)</h2>
+      <div style="display: flex; gap: 15px; overflow-x: auto; padding: 10px 20px;">
         @for (fav of favoritesService.myFavorites(); track fav.id) {
-          <div style="min-width: 120px; text-align: center;">
+          <div style="min-width: 140px; text-align: center; background: #222; padding: 10px; border-radius: 8px;">
             <img [src]="'https://image.tmdb.org/t/p/w200' + fav.poster_path" style="width: 100%; border-radius: 5px;">
-            <p style="font-size: 0.7rem;">{{ fav.title }}</p>
+            <p style="font-size: 0.75rem; color: white; margin-top: 5px;">{{ fav.title }}</p>
           </div>
         }
       </div>
     </section>
   }
 
-  <h1>Películas Populares</h1>
+  <h1 style="margin: 20px;">Películas Populares</h1>
   
-  <div class="movie-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px;">
+  <div class="movie-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; padding: 0 20px 40px 20px;">
     @for (movie of movies(); track movie.id) {
-      <div class="movie-card" style="border: 1px solid #ddd; padding: 10px; border-radius: 10px; text-align: center;">
+      <div class="movie-card" style="border: 1px solid #444; background: #1f1f1f; color: white; padding: 15px; border-radius: 10px; text-align: center;">
         <img [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path" [alt]="movie.title" style="width: 100%; border-radius: 5px;">
-        <h3>{{ movie.title }}</h3>
-        <p>⭐ {{ movie.vote_average }}</p>
+        <h3 style="font-size: 1.1rem; margin: 10px 0;">{{ movie.title }}</h3>
+        <p style="color: #ffc107;">⭐ {{ movie.vote_average }}</p>
         
         <button (click)="onToggleFavorite(movie)" 
-                [style.background-color]="isFavorite(movie.id) ? '#ffcdd2' : '#e0e0e0'"
-                style="border: none; padding: 8px; border-radius: 5px; cursor: pointer; width: 100%;">
+                [style.background-color]="isFavorite(movie.id) ? '#d32f2f' : '#444'"
+                style="color: white; border: none; padding: 10px; border-radius: 5px; cursor: pointer; width: 100%; font-weight: bold; margin-top: 10px;">
           {{ isFavorite(movie.id) ? '❤️ Quitar' : '🤍 Favorito' }}
         </button>
       </div>
     } @empty {
-      <p>Cargando películas...</p>
+      <p style="color: white; text-align: center; grid-column: 1 / -1;">Cargando películas populares...</p>
     }
   </div>
+
 </div>
